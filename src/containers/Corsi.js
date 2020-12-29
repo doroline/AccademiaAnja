@@ -36,7 +36,7 @@ const Corso = () => {
                 title={tabella[nodo].nome}
                 subheader={"Durata: " + tabella[nodo].durata}
               />
-              Prezzo {tabella[nodo].prezzo}
+             
               <CardMedia className="card-media" image={tabella[nodo].foto} />
               <CardContent className="programma">
                 <div

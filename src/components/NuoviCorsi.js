@@ -1,4 +1,4 @@
-import { useState, useContext, createContext } from "react";
+import { useState, useContext} from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import { ROTTE } from "../costanti";
 import { nodoContext } from "../containers/App";
@@ -13,7 +13,7 @@ import CardContent from "@material-ui/core/CardContent";
 // import firebaseConfig from "../firebase-config";
 // firebase.initializeApp(firebaseConfig);
 
-export const corsoContext = createContext();
+
 const NuoviCorsi = () => {
   const nodo = useContext(nodoContext);
   const tabella = useContext(tabellaContext);
@@ -21,6 +21,7 @@ const NuoviCorsi = () => {
   // costanti per gli Hook di Routing
   const listaRottePrecedenti = useHistory();
   const rottaCorrente = useLocation();
+  
   const [nomeCorso, setNomeCorso] = useState("");
 
   const cambiaRotta = (nuovaRotta, nomeCorso) => {
@@ -31,18 +32,18 @@ const NuoviCorsi = () => {
   };
 
   return (
-    <corsoContext.Provider value={tabella[nodo].nome}>
+ 
       <Contenitore>
         <h2>Ecco le ultime novità</h2>
         {nodo.map((nodo) => {
           if (tabella[nodo].news === "y") {
             return (
+             
               <Card className="card">
                 <CardHeader
                   title={tabella[nodo].nome}
                   subheader={"Durata: " + tabella[nodo].durata}
                 />
-                Prezzo {tabella[nodo].prezzo}
                 <CardMedia className="card-media" image={tabella[nodo].foto} />
                 <CardContent className="programma">
                   <div
@@ -61,11 +62,12 @@ const NuoviCorsi = () => {
                   </button>
                 </div>
               </Card>
+       
             );
           }
         })}
       </Contenitore>
-    </corsoContext.Provider>
+   
   );
 };
 

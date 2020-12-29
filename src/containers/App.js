@@ -3,6 +3,7 @@ import Home from "./Home";
 import Corsi from "./Corsi";
 import Corso from "./Corso";
 import Master from "./Master";
+import Contatti from "./Contatti";
 import Logo from "../img/logo.jpg";
 
 // importiamo gli elementi di material ui che ci occorrono : il menu vero e proprio e gli elementi list, list item e list text per stilizzare i bottoni che avremo nel menu
@@ -154,11 +155,8 @@ function App() {
             </header>
             <div className="app-corpo">
               <Switch>
-                <Route path={ROTTE.RICETTE}>
-                  <Home />
-                </Route>
-                <Route exact path={ROTTE.LISTA_DELLA_SPESA}>
-                  <Home />
+                <Route exact path={ROTTE.CONTATTI}>
+                  <Contatti />
                 </Route>
                 <Route exact path={ROTTE.MASTER}>
                   <Master />

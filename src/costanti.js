@@ -1,8 +1,7 @@
 export const ROTTE = {
     HOME: '/',
-    RICETTE: '/Ricette',
-    LISTA_DELLA_SPESA: '/lista-della-spesa',
     MASTER: '/Master',
-    CORSI: '/Corsi',
+    CORSI: '/Tutti-i-Corsi',
     CORSO: '/Corso',
+    CONTATTI: '/Contatti'
 };

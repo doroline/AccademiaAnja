@@ -5,7 +5,6 @@ import { useHistory, useLocation } from "react-router-dom";
 import { ROTTE } from "../costanti";
 //import { nodoContext } from "./App";
 //import { tabellaContext } from "./App";
-import { corsoContext } from "../components/NuoviCorsi";
 import styled from "styled-components";
 import Card from "@material-ui/core/Card";
 import CardHeader from "@material-ui/core/CardHeader";
@@ -19,8 +18,6 @@ import CardContent from "@material-ui/core/CardContent";
 const Corso = () => {
   //const nodo = useContext(nodoContext);
   //const tabella = useContext(tabellaContext);
-  const corso = useContext(corsoContext);
-  console.log(corso);
   const [nodo, setNodo] = useState([]);
   const [tabella, setTabella] = useState({});
 
@@ -50,7 +47,7 @@ const Corso = () => {
 
   return (
     <Contenitore>
-    <h2>ecco il corso che hai scelto {corso}</h2>
+    <h2>ecco il corso che hai scelto</h2>
       {
         //nodo.slice(0,1).map((nodo) => {
         nodo.map((nodo) => {
@@ -60,7 +57,7 @@ const Corso = () => {
                 title={tabella[nodo].nome}
                 subheader={"Durata: " + tabella[nodo].durata}
               />
-              Prezzo {tabella[nodo].prezzo}
+              
               <CardMedia className="card-media" image={tabella[nodo].foto} />
               <CardContent className="programma">
                 <div

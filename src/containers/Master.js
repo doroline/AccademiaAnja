@@ -26,6 +26,7 @@ const Master = () => {
   };
 
   const [pippo, setPippo] = useState(false);
+  const [pluto, setPluto] = useState(11);
   const [testobtn, setTestobtn] = useState('mostra');
 
   let prova = {
@@ -57,9 +58,9 @@ const Master = () => {
 
   return (
     <Contenitore>
-      <h2>I nostri Masterrr:</h2>
+      <h1>I NOSTRI MASTER:</h1>
       {
-        //nodo.slice(0,1).map((nodo) => {
+        //nodo.slice(0,3).map((nodo) => {
         nodo.map((nodo) => {
           if (tabella[nodo].master === true) {
             return (
@@ -68,7 +69,7 @@ const Master = () => {
                   title={tabella[nodo].nome}
                   subheader={"Durata: " + tabella[nodo].durata}
                 />
-                Prezzo {tabella[nodo].prezzo}
+                
                 <CardMedia className="card-media" image={tabella[nodo].foto} />
                 <CardContent className="programma">
                   <div
@@ -89,6 +90,7 @@ const Master = () => {
       <div>
       {pippo === true ? 'il valore di pippo è: TRUE':'il valore di pippo è: FALSE'}
       </div>
+      {pippo === true & pluto < 10 && <h2>ecco un altro modo per fare l'if con due </h2>}
       <button onClick={() =>cambiaPippo()}>{testobtn}</button>
       {prova.testo}
       {console.log(prova)}

@@ -55,10 +55,10 @@ const Menu = (props) => {
           <ListItem button key="I Corsi" onClick={()=> cambiaRotta(ROTTE.MASTER)}>
             <ListItemText primary="I Master" />
           </ListItem>
-          <ListItem button key="I Corsi" onClick={()=> cambiaRotta(ROTTE.RICETTE)}>
+          <ListItem button key="I Corsi" onClick={()=> cambiaRotta(ROTTE.CORSI)}>
             <ListItemText primary="Tutti i Corsi" />
           </ListItem>
-          <ListItem button key="Contatti" onClick={() => cambiaRotta(ROTTE.LISTA_DELLA_SPESA)}>
+          <ListItem button key="Contatti" onClick={() => cambiaRotta(ROTTE.CONTATTI)}>
             <ListItemText primary="Contatti" />
           </ListItem>
           {props.allievo && ( <ListItem button key="Offerte di lavoro" onClick={() => cambiaRotta(ROTTE.LISTA_DELLA_SPESA)} className="btnOfferte">
