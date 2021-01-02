@@ -19,7 +19,7 @@ const GlobalStyles = createGlobalStyle`
     max-width:300px!important;
   }
   .logo {
-    width: 50%!important;
+    width: 65%!important;
     margin-left: 20px!important;
     max-width:300px!important;
   }
@@ -48,6 +48,31 @@ const GlobalStyles = createGlobalStyle`
   font-size: 11px;
     text-align: center;
 }
+.avvisoAllievo {
+    font-size: 0.8em;
+    text-align: justify;
+    padding: 17px;
+    background: #24395f;
+}
+.MuiButton-contained {
+    color: rgba(0, 0, 0, 0.87);
+    box-shadow: none!important;
+    background-color: #ffffff;
+    width: 30%;
+    margin-left: 35%;
+}
+.MuiBottomNavigation-root {
+    height: 50px!important;
+    background-color: black!important;
+}
+.MuiBottomNavigationAction-root {
+    flex: 1;
+    color: rgb(255 255 255)!important;
+}
+.MuiBottomNavigationAction-root.Mui-selected {
+    color: #6c7ee2!important;
+}
+
 `;
 
 export default GlobalStyles;

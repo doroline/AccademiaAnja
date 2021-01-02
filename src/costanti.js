@@ -3,5 +3,6 @@ export const ROTTE = {
     MASTER: '/Master',
     CORSI: '/Tutti-i-Corsi',
     CORSO: '/Corso',
-    CONTATTI: '/Contatti'
+    CONTATTI: '/Contatti',
+    PRIMOACCESSO: '/PrimoAccesso'
 };

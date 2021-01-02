@@ -50,9 +50,9 @@ const Corso = () => {
     <h2>ecco il corso che hai scelto</h2>
       {
         //nodo.slice(0,1).map((nodo) => {
-        nodo.map((nodo) => {
+        nodo.map((nodo, key) => {
           return (
-            <Card className="card">
+            <Card className="card" id={key}>
               <CardHeader
                 title={tabella[nodo].nome}
                 subheader={"Durata: " + tabella[nodo].durata}

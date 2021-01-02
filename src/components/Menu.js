@@ -64,6 +64,7 @@ const Menu = (props) => {
           {props.allievo && ( <ListItem button key="Offerte di lavoro" onClick={() => cambiaRotta(ROTTE.LISTA_DELLA_SPESA)} className="btnOfferte">
             <ListItemText primary="Offerte di lavoro" />
           </ListItem>)}
+          {!props.allievo && <div className="avvisoAllievo">Se sei un nostro ex allievo, accedi con Google, e poi contattaci via email per comunicarci della tua iscrizione all'app, dopo una verifica, ti verrà attivata l'opzione per visualizzare tutte le <strong>offerte di lavoro dedicate ai nostri ex allievi.</strong></div>}
 
          
         </List>

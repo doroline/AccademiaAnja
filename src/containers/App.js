@@ -1,9 +1,12 @@
 import { useState, useEffect, createContext } from "react";
+import Button from '@material-ui/core/Button';
 import Home from "./Home";
 import Corsi from "./Corsi";
 import Corso from "./Corso";
 import Master from "./Master";
 import Contatti from "./Contatti";
+import Footer from "../components/Footer";
+import PrimoAccesso from './PrimoAccesso';
 import Logo from "../img/logo.jpg";
 
 // importiamo gli elementi di material ui che ci occorrono : il menu vero e proprio e gli elementi list, list item e list text per stilizzare i bottoni che avremo nel menu
@@ -15,7 +18,7 @@ import styled from "styled-components";
 import firebase from "firebase";
 import firebaseConfig from "../firebase-config";
 
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, Link, useHistory } from "react-router-dom";
 
 import { ROTTE } from "../costanti";
 
@@ -55,7 +58,11 @@ const logout = () => {
 
 export const nodoContext = createContext();
 export const tabellaContext = createContext();
+export const primoaccContext = createContext();
+
 function App() {
+  const [accesso, setAccesso] = useState(false);
+
   const [nodo, setNodo] = useState([]); // qui definisco l'array che conterrà tutti i nodi principali trasformati in array
   const [tabella, setTabella] = useState({}); // qui creo un oggetto che si riempirà con tutti i valori della tabella del db
 
@@ -105,10 +112,11 @@ function App() {
         if (cloneUtenteDb) {
           // così verifico se l'utente già esiste
 
-          setAllievo(cloneUtenteDb.allievo); // imposto allievo con il valore del nodo allievo preso dal db
-
+          setAllievo(cloneUtenteDb.allievo);
+          setAccesso(false); // imposto allievo con il valore del nodo allievo preso dal db
           return null; // ok allora non fare nulla
         } else {
+          setAccesso(true);
           // se invece non esiste
           utenteReferenza.set({
             email: utente.email,
@@ -127,6 +135,9 @@ function App() {
     // questo ci permette di non dover verificare prima di invocare questa funzione se dobbiamo aprire o chiudere il menu: lui lo capirà da solo!
     setMenuVisibile(!menuVisibile);
   };
+  const chiudiPrimoAcc = () =>{
+    setAccesso(false);
+  }
   if (loading) {
     return (
       <ContenitoreLoading>
@@ -136,6 +147,7 @@ function App() {
   }
   // questo return verrà letto SOLAMENTE se il loading sarà a false
   return (
+    
     <nodoContext.Provider value={nodo}>
       <tabellaContext.Provider value={tabella}>
         <Router>
@@ -151,8 +163,24 @@ function App() {
                 utente={utente}
                 allievo={allievo}
               />
-              <img src={Logo} className="logo" />
+               <Link to={ROTTE.HOME} className="linkHome"> 
+               <img src={Logo} className="logo"/>
+               </Link>
+             
             </header>
+            {accesso && (
+              <div className="contPrimoAccesso">
+                <h1 className="titoloHome">Grazie per esserti registrato</h1>
+                <p className="introAccademia">
+                  Ti ricordiamo che se sei un nostro ex allievo, ci puoi contattare alla
+                  mail info@anja.it per comunicarci della tua iscrizione all'app,e dopo un
+                  eventuale verifica, ti verrà attivata l'opzione per visualizzare tutte
+                  le <strong>offerte di lavoro dedicate ai nostri ex allievi</strong>.
+                </p>
+                <Button variant="contained" onClick={()=>chiudiPrimoAcc()}>CHIUDI</Button>
+            </div>
+            )}
+            {!accesso && (
             <div className="app-corpo">
               <Switch>
                 <Route exact path={ROTTE.CONTATTI}>
@@ -167,11 +195,18 @@ function App() {
                 <Route exact path={ROTTE.CORSO}>
                   <Corso />
                 </Route>
+                <Route exact path={ROTTE.PRIMOACCESSO}>
+                  <PrimoAccesso />
+                </Route>
                 <Route path={ROTTE.HOME}>
                   <Home />
                 </Route>
               </Switch>
             </div>
+            )}
+            <footer>
+              <Footer/>
+            </footer>
           </Contenitore>
         </Router>
       </tabellaContext.Provider>
@@ -189,13 +224,22 @@ const Contenitore = styled.div`
     color: white;
     text-align: right;
   }
+  .linkHome{
+    display: flex;
+  }
+  .contPrimoAccesso {
+    position: absolute;
+    background: white;
+    height: 100%;
+    padding: 20px;
+}
 `;
 
 const ContenitoreLoading = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 100vh;
+  height: auto;
 
   .MuiCircularProgress-colorPrimary {
     color: #e0902c;
