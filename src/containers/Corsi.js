@@ -69,7 +69,8 @@ const Corso = () => {
 const Contenitore = styled.div`
   display: flex;
   flex-wrap: wrap;
-  padding: 10px;
+  padding: 30px;
+  padding-top:80px;
   justify-content: center;
   .card {
     width: 350px;

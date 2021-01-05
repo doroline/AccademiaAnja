@@ -43,7 +43,8 @@ const Contatti = () => {
 const Contenitore = styled.div`
   display: flex;
   flex-wrap: wrap;
-  padding: 50px;
+  padding: 40px;
+  padding-top:100px;
   justify-content: center;
   .mappa {
     width: 100%;

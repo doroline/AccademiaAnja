@@ -20,12 +20,15 @@ Scopri per quali Master e' attiva questa promozione.
 const Contenitore = styled.div`
 display: flex;
     flex-wrap: wrap;
-    padding: 50px;
+    padding: 40px;
+    padding-top:70px;
     justify-content: center;
     .titoloHome{
       color: #5294ce;
     margin-bottom: 0px;
     padding-bottom:60px;
+    width:100%!important;
+    text-align:center;
     }
     .sottotitoloHome{
       color: grey;
