@@ -11,22 +11,20 @@ import SchoolIcon from '@material-ui/icons/School';
 import HomeIcon from "@material-ui/icons/Home";
 import LocationOnIcon from "@material-ui/icons/LocationOn";
 
-const Footer = () => {
+const Footer = (props) => {
 // costanti per gli Hook di Routing
 const listaRottePrecedenti = useHistory();
-const rottaCorrente = useLocation();
-
  const cambiaRotta = (nuovaRotta) => {
    listaRottePrecedenti.push(nuovaRotta);
  };
 
-  const [value, setValue] = useState("recents");
-
+  const [value, setValue] = useState("home");
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
   return (
+      
     <BottomNavigation value={value} onChange={handleChange}>
       <BottomNavigationAction value="home" icon={<HomeIcon />} label="home" onClick={()=> cambiaRotta(ROTTE.HOME)}/>
       <BottomNavigationAction value="master" icon={<SchoolIcon />} label="master" onClick={()=> cambiaRotta(ROTTE.MASTER)}/>

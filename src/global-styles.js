@@ -68,11 +68,29 @@ const GlobalStyles = createGlobalStyle`
 .MuiBottomNavigationAction-root {
     flex: 1;
     color: rgb(255 255 255)!important;
+    position:absolute;
+left:0;
+bottom:0;
+right:0;
 }
 .MuiBottomNavigationAction-root.Mui-selected {
     color: #6c7ee2!important;
 }
+header{
+  margin-bottom: 1rem;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+}
 
+footer{
+  margin-top: 1rem;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+}
 `;
 
 export default GlobalStyles;

@@ -25,6 +25,7 @@ display: flex;
     .titoloHome{
       color: #5294ce;
     margin-bottom: 0px;
+    padding-bottom:60px;
     }
     .sottotitoloHome{
       color: grey;
