@@ -1,8 +1,7 @@
 import { useContext, useState,useEffect } from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import { ROTTE } from "../costanti";
-import { nodoContext } from "./App";
-import { tabellaContext } from "./App";
+import { corsiContext } from "../containers/App";
 import styled from "styled-components";
 import Card from "@material-ui/core/Card";
 import CardHeader from "@material-ui/core/CardHeader";
@@ -16,8 +15,7 @@ import Truncate from 'react-truncate';
 // firebase.initializeApp(firebaseConfig);
 
 const Master = () => {
-  const nodo = useContext(nodoContext);
-  const tabella = useContext(tabellaContext);
+  const corsi = useContext(corsiContext);
 
   // costanti per gli Hook di Routing
   const listaRottePrecedenti = useHistory();
@@ -63,29 +61,27 @@ const Master = () => {
       <h1>I NOSTRI MASTER:</h1>
       {
         //nodo.slice(0,3).map((nodo) => {
-        nodo.map((nodo, key) => {
-          if (tabella[nodo].master === true) {
+          corsi.nodoPrincipale.map((nodo, key) => {
+          if (corsi.tabella[nodo].master === true) {
             return (
               <Card className="card" id={key}>
                 <CardHeader
-                  title={tabella[nodo].nome}
-                  subheader={"Durata: " + tabella[nodo].durata}
+                  title={corsi.tabella[nodo].nome}
+                  subheader={"Durata: " + corsi.tabella[nodo].durata}
                 />
                 
-                <CardMedia className="card-media" image={tabella[nodo].foto} />
+                <CardMedia className="card-media" image={corsi.tabella[nodo].foto} />
                 <CardContent className="programma">
                 <Truncate lines={3} ellipsis={<span>...</span>}>
                 <div
                     dangerouslySetInnerHTML={{
-                      __html: tabella[nodo].programma,
+                      __html: corsi.tabella[nodo].programma,
                     }}
                   ></div>
             </Truncate>
             <div>
-                  <Button
-                    onClick={() =>
-                      cambiaRotta(ROTTE.CORSO, tabella[nodo].nomeId)
-                    }
+            <Button
+                    onClick={() =>cambiaRotta(ROTTE.DETTAGLIO_CORSO + '/' + corsi.tabella[nodo].nomeId)}
                   >
                     Visualizza corso
                   </Button>

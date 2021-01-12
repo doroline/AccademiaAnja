@@ -2,16 +2,15 @@ import { useState, useEffect, createContext } from "react";
 import Button from "@material-ui/core/Button";
 import Home from "./Home";
 import Corsi from "./Corsi";
-import Corso from "./Corso";
+import DettaglioCorso from "./DettaglioCorso";
 import Master from "./Master";
 import Contatti from "./Contatti";
 import Certificazioni from "./Certificazioni";
 import Offerte from './Offerte';
 import Footer from "../components/Footer";
-import PrimoAccesso from "./PrimoAccesso";
 import Logo from "../img/logo.jpg";
 
-// importiamo gli elementi di material ui che ci occorrono : il menu vero e proprio e gli elementi list, list item e list text per stilizzare i bottoni che avremo nel menu
+// importiamo gli elementi di material ui che cxi occorrono : il menu vero e proprio e gli elementi list, list item e list text per stilizzare i bottoni che avremo nel menu
 import Menu from "../components/Menu";
 import MenuIcon from "@material-ui/icons/Menu";
 import CircularProgress from "@material-ui/core/CircularProgress";
@@ -64,16 +63,15 @@ const logout = () => {
   firebase.auth().signOut();
 };
 
-export const nodoContext = createContext();
-export const tabellaContext = createContext();
-export const primoaccContext = createContext();
+export const corsiContext = createContext();
 
 function App() {
   const [accesso, setAccesso] = useState(false);
-
-  const [nodo, setNodo] = useState([]); // qui definisco l'array che conterrà tutti i nodi principali trasformati in array
+  const [nodoPrincipale, setNodoPrincipale,] = useState([]); // qui definisco l'array che conterrà tutti i nodi principali trasformati in array
   const [tabella, setTabella] = useState({}); // qui creo un oggetto che si riempirà con tutti i valori della tabella del db
 
+  const [pagina, setPagina] = useState('');
+  
   useEffect(() => {
     const riferimentoTabella = firebase.database().ref("/corsi");
     riferimentoTabella.on("value", (tabellaDb) => {
@@ -83,8 +81,8 @@ function App() {
       if (tabFirebase) {
         // è un if che controlla se ci sono dati nella tabella
         setTabella(tabFirebase); // assegno all'oggetto "tabella" tutti i valori della tabella del db
-        setNodo(chiavi); // assegno all'array "nodo" solo i valori dei nodi principali sotto forma di array
-        console.log(nodo);
+        setNodoPrincipale(chiavi); // assegno all'array "nodo" solo i valori dei nodi principali sotto forma di array
+      
       }
     });
   }, []);
@@ -155,8 +153,10 @@ function App() {
   }
   // questo return verrà letto SOLAMENTE se il loading sarà a false
   return (
-    <nodoContext.Provider value={nodo}>
-      <tabellaContext.Provider value={tabella}>
+    <corsiContext.Provider value={
+   {   nodoPrincipale,
+      tabella}
+      }>
         <Router>
           <Contenitore className="App">
             <header className="app-header">
@@ -204,9 +204,10 @@ function App() {
                   <Route exact path={ROTTE.CORSI}>
                     <Corsi />
                   </Route>
-                  <Route exact path={ROTTE.CORSO}>
-                    <Corso />
+                  <Route exact path={ROTTE.DETTAGLIO_CORSO + '/:chiave'}>
+                     <DettaglioCorso />
                   </Route>
+
                   <Route exact path={ROTTE.OFFERTE}>
                     <Offerte />
                   </Route>
@@ -224,8 +225,7 @@ function App() {
             </footer>
           </Contenitore>
         </Router>
-      </tabellaContext.Provider>
-    </nodoContext.Provider>
+    </corsiContext.Provider>
   );
 }
 const Contenitore = styled.div`

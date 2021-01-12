@@ -1,5 +1,11 @@
 import { createGlobalStyle } from 'styled-components';
 
+export const colors = {
+  titolo : '#678bd0',
+  sottoTitolo : '#a2a2a2',
+};
+
+
 const GlobalStyles = createGlobalStyle`
   .fotoUtente{
     border-radius: 50%!important;
@@ -24,8 +30,11 @@ const GlobalStyles = createGlobalStyle`
     max-width:300px!important;
   }
   .btnOfferte{
-    background-color: #202440!important;
-    width: 80%!important;
+    background-color: #2024408a!important;
+    width: 70%!important;
+    border: 1px solid white!important;
+    border-left: 0px!important;
+    border-radius: 0px 20px 20px 0px!important;
   }
   .MuiButton-label {
     width: 100%;
@@ -82,6 +91,7 @@ header{
     top: 0;
     left: 0;
     width: 100%;
+    z-index:10;
 }
 
 footer{

@@ -1,8 +1,7 @@
 import { useState, useContext} from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import { ROTTE } from "../costanti";
-import { nodoContext } from "../containers/App";
-import { tabellaContext } from "../containers/App";
+import { corsiContext } from "../containers/App";
 import styled from "styled-components";
 import Card from "@material-ui/core/Card";
 import CardHeader from "@material-ui/core/CardHeader";
@@ -17,42 +16,36 @@ import Truncate from 'react-truncate';
 
 
 const NuoviCorsi = () => {
-  const nodo = useContext(nodoContext);
-  const tabella = useContext(tabellaContext);
+  const corsi = useContext(corsiContext);
 
   // costanti per gli Hook di Routing
   const listaRottePrecedenti = useHistory();
   const rottaCorrente = useLocation();
-  
-  const [nomeCorso, setNomeCorso] = useState("");
 
-  const cambiaRotta = (nuovaRotta, nomeCorso) => {
-    setNomeCorso(nomeCorso);
+  const cambiaRotta = (nuovaRotta) => {
     listaRottePrecedenti.push(nuovaRotta);
-
-    console.log(nomeCorso);
   };
 
   return (
  
       <Contenitore>
         <h2>Ecco le ultime novità</h2>
-        {nodo.map((nodo, key) => {
-          if (tabella[nodo].news === "y") {
+        {corsi.nodoPrincipale.map((nodo, key) => {
+          if (corsi.tabella[nodo].news === "y") {
             return (
              
               <Card className="card" id={key}>
                 <CardHeader
-                  title={tabella[nodo].nome}
-                  subheader={"Durata: " + tabella[nodo].durata}
+                  title={corsi.tabella[nodo].nome}
+                  subheader={"Durata: " + corsi.tabella[nodo].durata}
                 />
-                <CardMedia className="card-media" image={tabella[nodo].foto} />
+                <CardMedia className="card-media" image={corsi.tabella[nodo].foto} />
                 <CardContent className="programma">
 
                 <Truncate lines={3} ellipsis={<span>...</span>}>
                 <div
                     dangerouslySetInnerHTML={{
-                      __html: tabella[nodo].programma,
+                      __html: corsi.tabella[nodo].programma,
                     }}
                   ></div>
             </Truncate>
@@ -60,9 +53,7 @@ const NuoviCorsi = () => {
                 </CardContent>
                 <div>
                   <Button
-                    onClick={() =>
-                      cambiaRotta(ROTTE.CORSO, tabella[nodo].nomeId)
-                    }
+                    onClick={() =>cambiaRotta(ROTTE.DETTAGLIO_CORSO + '/' + corsi.tabella[nodo].nomeId)}
                   >
                     Visualizza corso
                   </Button>

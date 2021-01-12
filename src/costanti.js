@@ -2,9 +2,9 @@ export const ROTTE = {
     HOME: '/',
     MASTER: '/Master',
     CORSI: '/Tutti-i-Corsi',
-    CORSO: '/Corso',
     CONTATTI: '/Contatti',
     PRIMOACCESSO: '/PrimoAccesso',
     CERTIFICAZIONI: '/Certificazioni',
-    OFFERTE: '/Offerte'
+    OFFERTE: '/Offerte',
+    DETTAGLIO_CORSO: '/dettaglio-corso'
 };

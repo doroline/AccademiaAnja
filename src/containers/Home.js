@@ -1,7 +1,10 @@
+import { useContext} from "react";
 import styled from "styled-components";
 import NuoviCorsi from "../components/NuoviCorsi";
+import corsiContext from "./App";
 
 const Home = () => {
+  const corsi = useContext(corsiContext);
   return (
     <Contenitore>
     <h1 className="titoloHome">Accademia Anja</h1>
@@ -12,7 +15,7 @@ Cosa intendiamo per: Corsi Informatica? Che eroghiamo Corsi professionalizzanti,
 Nei nostri Master di Grafica e nei Master Web, ci sono 1, 2, o anche 3 Certificazioni valevoli a livello internazionale in omaggio!
 Scopri per quali Master e' attiva questa promozione.
     </p>
-      <NuoviCorsi />
+        <NuoviCorsi />
     </Contenitore>
   );
 };
