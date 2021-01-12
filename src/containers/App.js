@@ -71,7 +71,7 @@ function App() {
   const [tabella, setTabella] = useState({}); // qui creo un oggetto che si riempirà con tutti i valori della tabella del db
 
   const [pagina, setPagina] = useState('');
-  
+
   useEffect(() => {
     const riferimentoTabella = firebase.database().ref("/corsi");
     riferimentoTabella.on("value", (tabellaDb) => {
@@ -204,7 +204,7 @@ function App() {
                   <Route exact path={ROTTE.CORSI}>
                     <Corsi />
                   </Route>
-                  <Route exact path={ROTTE.DETTAGLIO_CORSO + '/:chiave'}>
+                  <Route exact path={ROTTE.DETTAGLIO_CORSO + '/:chiave'} pagina={pagina}>
                      <DettaglioCorso />
                   </Route>
 

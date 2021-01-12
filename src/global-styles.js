@@ -5,6 +5,15 @@ export const colors = {
   sottoTitolo : '#a2a2a2',
 };
 
+export const breakpoints = {
+  screenMobXSmall: '320px',
+  screenMobSmall: '375px',
+  screenMobMid: '411px',
+  screenMobMedium: '600px',
+  screenMobBig: '768px',
+  screenDeskSmall: '960px',
+  screenDeskMid: '1300px',
+};
 
 const GlobalStyles = createGlobalStyle`
   .fotoUtente{
@@ -70,6 +79,9 @@ const GlobalStyles = createGlobalStyle`
     width: 30%;
     margin-left: 35%;
 }
+.MuiCardHeader-root{
+  padding: 13px!important;
+}
 .MuiBottomNavigation-root {
     height: 50px!important;
     background-color: black!important;
@@ -84,6 +96,10 @@ right:0;
 }
 .MuiBottomNavigationAction-root.Mui-selected {
     color: #6c7ee2!important;
+}
+.MuiTypography-colorTextSecondary {
+    color: rgba(0, 0, 0, 0.54)!important;
+    font-size: 16px!important;
 }
 header{
   margin-bottom: 1rem;
