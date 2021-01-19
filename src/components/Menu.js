@@ -64,6 +64,10 @@ const Menu = (props) => {
           <ListItem button key="Certificazioni" onClick={() => cambiaRotta(ROTTE.CERTIFICAZIONI)}>
             <ListItemText primary="Certificazioni" />
           </ListItem>
+          <ListItem button key="Preferiti" onClick={() => cambiaRotta(ROTTE.PREFERITI)}>
+           <ListItemText primary="Preferiti" />
+       </ListItem>
+
           {props.allievo && ( <ListItem button key="Offerte di lavoro" onClick={() => cambiaRotta(ROTTE.OFFERTE)} className="btnOfferte">
             <ListItemText primary="Offerte di lavoro" />
           </ListItem>)}

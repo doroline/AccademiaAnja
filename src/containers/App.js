@@ -6,7 +6,8 @@ import DettaglioCorso from "./DettaglioCorso";
 import Master from "./Master";
 import Contatti from "./Contatti";
 import Certificazioni from "./Certificazioni";
-import Offerte from './Offerte';
+import Offerte from "./Offerte";
+import Preferiti from "./Preferiti";
 import Footer from "../components/Footer";
 import Logo from "../img/logo.jpg";
 
@@ -64,13 +65,72 @@ const logout = () => {
 };
 
 export const corsiContext = createContext();
+export const UtenteContext = createContext();
 
 function App() {
   const [accesso, setAccesso] = useState(false);
-  const [nodoPrincipale, setNodoPrincipale,] = useState([]); // qui definisco l'array che conterrà tutti i nodi principali trasformati in array
+  const [nodoPrincipale, setNodoPrincipale] = useState([]); // qui definisco l'array che conterrà tutti i nodi principali trasformati in array
   const [tabella, setTabella] = useState({}); // qui creo un oggetto che si riempirà con tutti i valori della tabella del db
 
-  const [pagina, setPagina] = useState('');
+  const [pagina, setPagina] = useState("");
+
+  const [preferiti, setPreferiti] = useState({});
+  const aggiungiPreferito = (id) => {
+    // aggiungo al mio db, nel nodo utente loggato il mio nuovo preferito, generando una nuova chiave univoca id
+    const preferitoRef = firebase
+      .database()
+      .ref(`/utenti/${utente.uid}/preferiti`)
+      .push(id);
+    const chiavePreferito = preferitoRef.key; // estraggo la chiave
+
+    // creo il nuovo oggetto di preferito a partire da quelli già presenti clonando il miostato preferiti
+    const nuoviPreferiti = { ...preferiti };
+    nuoviPreferiti[chiavePreferito] = id;
+
+    // e qui aggiungo il nuovo preferito
+    setPreferiti(nuoviPreferiti);
+  };
+
+  const rimuoviPreferito = (id) => {
+    const chiaveDaRimuovere = Object.keys(preferiti).find((chiave) => preferiti[chiave] === id); // trasformo lo stato preferiti in un array di chiavi (con Object.keys), e la scorro, lo ciclo, tutto e poi vado a cercare (con il find che si usa con le array) quel elemento che associato ad una chiave particolare  (chiave) sarà uguale al valore di ID che gli stiamo passando
+
+    // rimuoviamo il preferito da firebase utilizzando il metodo remove
+    const preferitoRef = firebase
+      .database()
+      .ref(`/utenti/${utente.uid}/preferiti/${chiaveDaRimuovere}`)
+      .remove();
+
+    // creo il nuovo oggetto di preferito a partire da quelli già presenti clonando il miostato preferiti
+    const nuoviPreferiti = { ...preferiti };
+
+    // rimuovo il preferito dal mio oggetta appena clonato
+    delete nuoviPreferiti[chiaveDaRimuovere];
+
+    setPreferiti(nuoviPreferiti);
+  };
+
+  const isPreferito = (id) => {
+    // questo metodo serve a verificare se una ricetta fa o meno parte dei preferiti
+    //ciclo l'oggeto preferiti e mi trovo se è presente  l'id specificato nell'input (id), se c'è avrò il suo indice nell'array, altrimenti il valore restituito è -1, perchè il findIndex funziona cosi, se trova bene altrimenti mette -1
+    const chiavePreferito = Object.keys(preferiti).findIndex(
+      (chiave) => preferiti[chiave] === id
+    );
+    if (chiavePreferito >= 0) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
+  const togglePreferito = (id) => {
+    if (isPreferito(id)) {
+      return rimuoviPreferito(id);
+    } else {
+      return aggiungiPreferito(id);
+    }
+  };
+
+
 
   useEffect(() => {
     const riferimentoTabella = firebase.database().ref("/corsi");
@@ -82,7 +142,6 @@ function App() {
         // è un if che controlla se ci sono dati nella tabella
         setTabella(tabFirebase); // assegno all'oggetto "tabella" tutti i valori della tabella del db
         setNodoPrincipale(chiavi); // assegno all'array "nodo" solo i valori dei nodi principali sotto forma di array
-      
       }
     });
   }, []);
@@ -117,6 +176,12 @@ function App() {
 
         if (cloneUtenteDb) {
           // così verifico se l'utente già esiste
+
+          // se esiste ed ha dei preferiti, li prendo e li assegno alla super var preferiti
+          if(cloneUtenteDb.preferiti){
+            setPreferiti(cloneUtenteDb.preferiti);
+          }
+ 
 
           setAllievo(cloneUtenteDb.allievo);
           setAccesso(false); // imposto allievo con il valore del nodo allievo preso dal db
@@ -153,78 +218,88 @@ function App() {
   }
   // questo return verrà letto SOLAMENTE se il loading sarà a false
   return (
-    <corsiContext.Provider value={
-   {   nodoPrincipale,
-      tabella}
-      }>
-        <Router>
-          <Contenitore className="App">
-            <header className="app-header">
-              {/* questo bottone determina l'apertura o la chiusura del menu*/}
-              <MenuIcon onClick={() => apriChiudiMenu()} />
-              <Menu
-                menuVisibile={menuVisibile}
-                apriChiudiMenu={apriChiudiMenu}
-                logout={logout}
-                loggatiConGoogle={loggatiConGoogle}
-                utente={utente}
-                allievo={allievo}
-              />
-              <Link to={ROTTE.HOME} className="linkHome">
-                <img src={Logo} className="logo" />
-              </Link>
-            </header>
-            {accesso && (
-              <div className="contPrimoAccesso">
-                <h1 className="titoloHome">Grazie per esserti registrato</h1>
-                <p className="introAccademia">
-                  Ti ricordiamo che se sei un nostro ex allievo, ci puoi
-                  contattare alla mail info@anja.it per comunicarci della tua
-                  iscrizione all'app,e dopo un eventuale verifica, ti verrà
-                  attivata l'opzione per visualizzare tutte le{" "}
-                  <strong>
-                    offerte di lavoro dedicate ai nostri ex allievi
-                  </strong>
-                  .
-                </p>
-                <Button variant="contained" onClick={() => chiudiPrimoAcc()}>
-                  CHIUDI
-                </Button>
-              </div>
-            )}
-            {!accesso && (
-              <div className="app-corpo">
-                <Switch>
-                  <Route exact path={ROTTE.CONTATTI}>
-                    <Contatti />
-                  </Route>
-                  <Route exact path={ROTTE.MASTER}>
-                    <Master />
-                  </Route>
-                  <Route exact path={ROTTE.CORSI}>
-                    <Corsi />
-                  </Route>
-                  <Route exact path={ROTTE.DETTAGLIO_CORSO + '/:chiave'} pagina={pagina}>
-                     <DettaglioCorso />
-                  </Route>
+    <corsiContext.Provider value={{ nodoPrincipale, tabella }}>
+          <UtenteContext.Provider
+        value={{
+          utente,
+          togglePreferito,
+          isPreferito,
+        }}
+      >
+      <Router>
+        <Contenitore className="App">
+          <header className="app-header">
+            {/* questo bottone determina l'apertura o la chiusura del menu*/}
+            <MenuIcon onClick={() => apriChiudiMenu()} />
+            <Menu
+              menuVisibile={menuVisibile}
+              apriChiudiMenu={apriChiudiMenu}
+              logout={logout}
+              loggatiConGoogle={loggatiConGoogle}
+              utente={utente}
+              allievo={allievo}
+            />
+            <Link to={ROTTE.HOME} className="linkHome">
+              <img src={Logo} className="logo" />
+            </Link>
+          </header>
+          {accesso && (
+            <div className="contPrimoAccesso">
+              <h1 className="titoloHome">Grazie per esserti registrato</h1>
+              <p className="introAccademia">
+                Ti ricordiamo che se sei un nostro ex allievo, ci puoi
+                contattare alla mail info@anja.it per comunicarci della tua
+                iscrizione all'app,e dopo un eventuale verifica, ti verrà
+                attivata l'opzione per visualizzare tutte le{" "}
+                <strong>offerte di lavoro dedicate ai nostri ex allievi</strong>
+                .
+              </p>
+              <Button variant="contained" onClick={() => chiudiPrimoAcc()}>
+                CHIUDI
+              </Button>
+            </div>
+          )}
+          {!accesso && (
+            <div className="app-corpo">
+              <Switch>
+                <Route exact path={ROTTE.CONTATTI}>
+                  <Contatti />
+                </Route>
+                <Route exact path={ROTTE.MASTER}>
+                  <Master />
+                </Route>
+                <Route exact path={ROTTE.CORSI}>
+                  <Corsi />
+                </Route>
+                <Route
+                  exact
+                  path={ROTTE.DETTAGLIO_CORSO + "/:chiave"}
+                  pagina={pagina}
+                >
+                  <DettaglioCorso />
+                </Route>
 
-                  <Route exact path={ROTTE.OFFERTE}>
-                    <Offerte />
-                  </Route>
-                  <Route exact path={ROTTE.CERTIFICAZIONI}>
-                    <Certificazioni />
-                  </Route>
-                  <Route path={ROTTE.HOME}>
-                    <Home />
-                  </Route>
-                </Switch>
-              </div>
-            )}
-            <footer>
-              <Footer/>
-            </footer>
-          </Contenitore>
-        </Router>
+                <Route exact path={ROTTE.OFFERTE}>
+                  <Offerte />
+                </Route>
+                <Route exact path={ROTTE.CERTIFICAZIONI}>
+                  <Certificazioni />
+                </Route>
+                <Route exact path={ROTTE.PREFERITI}>
+                  <Preferiti />
+                </Route>
+                <Route path={ROTTE.HOME}>
+                  <Home />
+                </Route>
+              </Switch>
+            </div>
+          )}
+          <footer>
+            <Footer />
+          </footer>
+        </Contenitore>
+      </Router>
+      </UtenteContext.Provider>
     </corsiContext.Provider>
   );
 }

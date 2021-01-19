@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import { ROTTE } from "../costanti";
-import { corsiContext } from "../containers/App";
+import { corsiContext, UtenteContext } from "../containers/App";
 import styled, { keyframes } from "styled-components";
 import Card from "@material-ui/core/Card";
 import CardHeader from "@material-ui/core/CardHeader";
@@ -13,15 +13,16 @@ import Truncate from 'react-truncate';
 import { colors } from '../global-styles';
 
 import CardActions from "@material-ui/core/CardActions";
-import { UtenteContext } from "../containers/App";
 import IconButton from '@material-ui/core/IconButton';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 
-const Corso = () => {
-  const corsi = useContext(corsiContext);
 
+const Preferiti = () => {
+  const corsi = useContext(corsiContext);
   const contestoUtente = useContext(UtenteContext);
+
+
 
   // costanti per gli Hook di Routing
   const listaRottePrecedenti = useHistory();
@@ -31,11 +32,15 @@ const Corso = () => {
     listaRottePrecedenti.push(nuovaRotta);
   };
 
+  const corsiPreferiti = corsi?.nodoPrincipale.filter((chiave) => { // in questo modo mi ciclo tutte le ricette e vado a verificare se ci sono dei preferiti
+    return contestoUtente.isPreferito(chiave); // tramite il metodo isPreferito, verifico se le ricette ciclate, sono tra nel nodo preferiti dell'utente, e se ci sono le assegno alla costante ricettePreferite
+ })
+ 
   return (
     <Contenitore>
       {
         //nodo.slice(0,1).map((nodo) => {
-          corsi.nodoPrincipale.map((nodo, key) => {
+          corsiPreferiti.map((nodo, key) => {
             const gestisciPreferito = (evento) =>{
     evento.stopPropagation();
     contestoUtente.togglePreferito(nodo);
@@ -64,7 +69,6 @@ const Corso = () => {
                   </Button>
                 </div>
                 </CardContent>
-                {contestoUtente?.utente?.loggato && (
                 <CardActions disableSpacing>
                   <IconButton onClick={(evento) => gestisciPreferito(evento)}>
                     {contestoUtente.isPreferito(nodo) ? (
@@ -74,7 +78,6 @@ const Corso = () => {
                     )}
                   </IconButton>
                 </CardActions>
-              )}
             </Card>
           );
         })
@@ -103,4 +106,4 @@ const Contenitore = styled.div`
     color: grey;
   }
 `;
-export default Corso;
+export default Preferiti;

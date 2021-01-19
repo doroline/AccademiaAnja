@@ -6,5 +6,6 @@ export const ROTTE = {
     PRIMOACCESSO: '/PrimoAccesso',
     CERTIFICAZIONI: '/Certificazioni',
     OFFERTE: '/Offerte',
-    DETTAGLIO_CORSO: '/dettaglio-corso'
+    DETTAGLIO_CORSO: '/dettaglio-corso',
+    PREFERITI: '/preferiti'
 };
