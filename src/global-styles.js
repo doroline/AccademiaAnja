@@ -117,6 +117,14 @@ footer{
   left: 0;
   width: 100%;
 }
+.MuiList-padding {
+      padding-left: 8px!important;
+      padding-right: 8px!important;
+      .share-btn{
+        margin-left:4px;
+        margin-right:4px;
+      }
+  }
 `;
 
 export default GlobalStyles;

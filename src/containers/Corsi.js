@@ -10,6 +10,8 @@ import CardContent from "@material-ui/core/CardContent";
 import Button from '@material-ui/core/Button';
 import Truncate from 'react-truncate';
 
+ 
+
 // import firebase from "firebase";
 // import firebaseConfig from "../firebase-config";
 // firebase.initializeApp(firebaseConfig);
@@ -48,7 +50,7 @@ const Corso = () => {
             </Truncate>
             <div>
             <Button
-                    onClick={() =>cambiaRotta(ROTTE.DETTAGLIO_CORSO + '/' + corsi.tabella[nodo].nomeId)}
+                    onClick={() =>cambiaRotta(ROTTE.DETTAGLIO_CORSO + '/' + nodo)}
                   >
                     Visualizza corso
                   </Button>

@@ -53,7 +53,7 @@ const NuoviCorsi = () => {
                 </CardContent>
                 <div>
                   <Button
-                    onClick={() =>cambiaRotta(ROTTE.DETTAGLIO_CORSO + '/' + corsi.tabella[nodo].nomeId)}
+                    onClick={() =>cambiaRotta(ROTTE.DETTAGLIO_CORSO + '/' + nodo)}
                   >
                     Visualizza corso
                   </Button>

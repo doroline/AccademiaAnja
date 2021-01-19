@@ -1,4 +1,4 @@
-import { useContext, useEffect} from "react";
+import { useContext, useEffect, useState} from "react";
 import { corsiContext } from "./App";
 import { useParams, useHistory } from "react-router-dom";
 import { colors, breakpoints } from "../global-styles";
@@ -12,11 +12,24 @@ import CardContent from "@material-ui/core/CardContent";
 
 import ArrowBackIosRoundedIcon from '@material-ui/icons/ArrowBackIosRounded';
 
+import {
+  WhatsappShareButton,
+  EmailShareButton,
+  FacebookShareButton,
+  WhatsappIcon,
+  EmailIcon,
+  FacebookIcon
+ } from "react-share";
+
+ import { Menu, IconButton } from "@material-ui/core";
+import { Share } from "@material-ui/icons";
 
 
 
 
 const Corso = () => {
+
+  const [apriChiudShareMenu, setApriChiudiShareMenu] = useState(null);
 
   // in questo modo mi parte la pagina dall'alto su y
   useEffect(() => {
@@ -32,7 +45,47 @@ const Corso = () => {
   return (
     <Contenitore>
             <Card className="card">
+            
               <CardMedia className="card-media" image={corso?.foto} />
+
+              <IconButton
+            className="share btn"
+            aria-label="condivi"
+            onClick={(e) => setApriChiudiShareMenu(e.currentTarget)}
+          >
+            <Share htmlColor={colors.mainOrange} />
+          </IconButton>
+          <Menu
+            id="share-menu"
+            className="share-menu"
+            keepMounted
+            anchorEl={apriChiudShareMenu}
+            open={Boolean(apriChiudShareMenu)}
+            onClose={() => setApriChiudiShareMenu(null)}
+          >
+            <WhatsappShareButton
+              // title={ricetta?.name + ": "}
+              title={`Ciao, dai un occhiata a questa ricetta, *${corso?.nome}* : `}
+              url={window.location.href}
+              children={
+                <WhatsappIcon className="share-btn" size={32} round={true} />
+              } // si occupa di mostrare l'elemento che gli andiamo ad inserire dentro
+            />
+            <FacebookShareButton
+              quote={`Ciao, dai un occhiata a questa corso, ${corso?.nome} : `}
+              url={window.location.href}
+              children={
+                <FacebookIcon className="share-btn" size={32} round={true} />
+              } 
+            />
+            <EmailShareButton
+              title={`Ciao, dai un occhiata a questa corso, ${corso?.nome} : `}
+              url={window.location.href}
+              children={
+                <EmailIcon className="share-btn" size={32} round={true} />
+              } 
+            />
+          </Menu>
                <div className="CardTitolo">{corso?.nome}</div>
                <div className="CardSottoTitolo">{corso?.durata}</div>
               <CardContent className="programma">
@@ -87,6 +140,19 @@ const Contenitore = styled.div`
     height: 0;
     padding-top: 56.25%;
   }
+  .btn{
+        position: relative;
+        background-color: white;
+        top: -29px;
+        left: 10px;
+        &.share {
+          right:106;
+        }
+
+      }
+      .btn:hover{
+        background-color: white!important;
+      }
   .programma{
     padding: 20px;
   }
@@ -103,5 +169,7 @@ const Contenitore = styled.div`
     border-radius: 50%;
     padding: 5px;
   }
+
+  
 `;
 export default Corso;

@@ -1,4 +1,4 @@
-import { useContext, useState,useEffect } from "react";
+import { useContext, useState, useEffect } from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import { ROTTE } from "../costanti";
 import { corsiContext } from "../containers/App";
@@ -69,23 +69,23 @@ const Master = () => {
                   title={corsi.tabella[nodo].nome}
                   subheader={"Durata: " + corsi.tabella[nodo].durata}
                 />
-                
                 <CardMedia className="card-media" image={corsi.tabella[nodo].foto} />
                 <CardContent className="programma">
-                <Truncate lines={3} ellipsis={<span>...</span>}>
+                <Truncate width='1000'>
                 <div
                     dangerouslySetInnerHTML={{
                       __html: corsi.tabella[nodo].programma,
                     }}
-                  ></div>
+                  />
             </Truncate>
             <div>
             <Button
-                    onClick={() =>cambiaRotta(ROTTE.DETTAGLIO_CORSO + '/' + corsi.tabella[nodo].nomeId)}
+                    onClick={() =>cambiaRotta(ROTTE.DETTAGLIO_CORSO + '/' + nodo)}
                   >
                     Visualizza corso
                   </Button>
                 </div>
+                
                 </CardContent>
               </Card>
             );
@@ -103,6 +103,12 @@ const Contenitore = styled.div`
   flex-wrap: wrap;
   padding: 10px;
   justify-content: center;
+  margin-top:50px;
+  h1{
+    display: block;
+    width: 100%;
+    text-align: center;
+  }
   h2 {
     width: 100%;
     text-align: center;
