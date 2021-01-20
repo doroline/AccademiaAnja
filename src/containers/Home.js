@@ -2,6 +2,7 @@ import { useContext} from "react";
 import styled from "styled-components";
 import NuoviCorsi from "../components/NuoviCorsi";
 import corsiContext from "./App";
+import { colors } from "../global-styles";
 
 const Home = () => {
   const corsi = useContext(corsiContext);
@@ -27,7 +28,7 @@ display: flex;
     padding-top:70px;
     justify-content: center;
     .titoloHome{
-      color: #5294ce;
+      color: ${colors.titolo};
     margin-bottom: 0px;
     padding-bottom:60px;
     width:100%!important;

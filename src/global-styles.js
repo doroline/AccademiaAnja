@@ -23,10 +23,6 @@ const GlobalStyles = createGlobalStyle`
     margin-left: 10px!important;
     margin-right: 10px!important;
   }
-  .menuLaterale{
-    background-color:red!important;
-  }
-  
   .MuiDrawer-paper {
     width: 60%;
     background-color: #22578e!important;
@@ -52,7 +48,7 @@ const GlobalStyles = createGlobalStyle`
     justify-content: inherit;
     background: #5779d8;
     color: white;
-    padding: 8px;
+    padding: 20px;
     border-radius: 6px;
 }
 
@@ -117,6 +113,9 @@ footer{
   left: 0;
   width: 100%;
 }
+.MuiPaper-elevation1 {
+    box-shadow: 0px 1px 11px 5px rgba(0,0,0,0.2), 1px 1px 6px 0px rgba(0,0,0,0.14), 0px 1px 3px 0px rgba(0,0,0,0.12) !important;
+}
 .MuiList-padding {
       padding-left: 8px!important;
       padding-right: 8px!important;
@@ -125,6 +124,33 @@ footer{
         margin-right:4px;
       }
   }
+  .contenitoreMenu{
+  padding-left:0px!important;
+}
+  .MuiButton-root {
+    width: 100%;
+}
+.MuiCardActions-root {
+    justify-content: center;
+    margin-top: -15px;
+}
+
+.MuiIconButton-root {
+  border: 2px solid ${colors.titolo} !important;
+}
+.cuorePieno{
+fill:${colors.titolo}!important;
+}
+.noPreferiti {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 60vh;
+    font-size: 18px;
+    color: ${colors.titolo};
+    font-weight: bold;
+}
 `;
 
 export default GlobalStyles;

@@ -60,7 +60,7 @@ const NuoviCorsi = () => {
                     }}
                   ></div>
                 </Truncate>
-              </CardContent>
+              
               <div>
                 <Button
                   onClick={() =>
@@ -70,13 +70,14 @@ const NuoviCorsi = () => {
                   Visualizza corso
                 </Button>
               </div>
+              </CardContent>
               {contestoUtente?.utente?.loggato && (
                 <CardActions disableSpacing>
                   <IconButton onClick={(evento) => gestisciPreferito(evento)}>
                     {contestoUtente.isPreferito(nodo) ? (
-                      <FavoriteIcon htmlColor={colors.mainOrange} />
+                      <FavoriteIcon htmlColor={colors.mainOrange} className="cuorePieno"/>
                     ) : (
-                      <FavoriteBorderIcon htmlColor={colors.mainOrange} />
+                      <FavoriteBorderIcon htmlColor={colors.mainOrange} className="cuorePieno" />
                     )}
                   </IconButton>
                 </CardActions>

@@ -10,12 +10,18 @@ import CardContent from "@material-ui/core/CardContent";
 import Button from '@material-ui/core/Button';
 import Truncate from 'react-truncate';
 
-// import firebase from "firebase";
-// import firebaseConfig from "../firebase-config";
-// firebase.initializeApp(firebaseConfig);
+
+import { colors } from "../global-styles";
+
+import CardActions from "@material-ui/core/CardActions";
+import { UtenteContext } from "../containers/App";
+import IconButton from "@material-ui/core/IconButton";
+import FavoriteIcon from "@material-ui/icons/Favorite";
+import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 
 const Master = () => {
   const corsi = useContext(corsiContext);
+  const contestoUtente = useContext(UtenteContext);
 
   // costanti per gli Hook di Routing
   const listaRottePrecedenti = useHistory();
@@ -62,6 +68,11 @@ const Master = () => {
       {
         //nodo.slice(0,3).map((nodo) => {
           corsi.nodoPrincipale.map((nodo, key) => {
+            const gestisciPreferito = (evento) => {
+            evento.stopPropagation();
+            contestoUtente.togglePreferito(nodo);
+          };
+
           if (corsi.tabella[nodo].master === true) {
             return (
               <Card className="card" id={key}>
@@ -87,6 +98,17 @@ const Master = () => {
                 </div>
                 
                 </CardContent>
+                {contestoUtente?.utente?.loggato && (
+                <CardActions disableSpacing>
+                  <IconButton onClick={(evento) => gestisciPreferito(evento)}>
+                    {contestoUtente.isPreferito(nodo) ? (
+                      <FavoriteIcon htmlColor={colors.mainOrange} className="cuorePieno"/>
+                    ) : (
+                      <FavoriteBorderIcon htmlColor={colors.mainOrange} className="cuorePieno" />
+                    )}
+                  </IconButton>
+                </CardActions>
+              )}
               </Card>
             );
           } else {

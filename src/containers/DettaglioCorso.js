@@ -126,7 +126,7 @@ const Contenitore = styled.div`
 
 
   .card {
-    width: 100%;
+    width: 90%;
     margin-bottom: 30px;
     padding-bottom: 40px;
     margin-top: 70px;
