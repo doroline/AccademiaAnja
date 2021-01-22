@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import { ROTTE } from "../costanti";
 import { corsiContext } from "../containers/App";
@@ -19,6 +19,18 @@ import FavoriteIcon from "@material-ui/icons/Favorite";
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 
 const Corso = () => {
+  const [mostraFrase, setMostraFrase] = useState(false);
+  const [frase, setFrase] = useState("");
+  const gestisciFrase = () => {
+    if (mostraFrase) {
+      setFrase("");
+      setMostraFrase(false);
+    } else {
+      setFrase("per usare i preferiti devi essere loggato!");
+      setMostraFrase(true);
+    }
+  };
+
   const corsi = useContext(corsiContext);
 
   const contestoUtente = useContext(UtenteContext);
@@ -73,12 +85,32 @@ const Corso = () => {
                 <CardActions disableSpacing>
                   <IconButton onClick={(evento) => gestisciPreferito(evento)}>
                     {contestoUtente.isPreferito(nodo) ? (
-                      <FavoriteIcon htmlColor={colors.mainOrange} className="cuorePieno"/>
+                      <FavoriteIcon
+                        htmlColor={colors.mainOrange}
+                        className="cuorePieno"
+                      />
                     ) : (
-                      <FavoriteBorderIcon htmlColor={colors.mainOrange} className="cuorePieno" />
+                      <FavoriteBorderIcon
+                        htmlColor={colors.mainOrange}
+                        className="cuorePieno"
+                      />
                     )}
                   </IconButton>
                 </CardActions>
+              )}
+              {!contestoUtente?.utente?.loggato && (
+                <div className="contenitoreBtnFalso">
+                  <div
+                    className="preferitiFalso"
+                    onClick={() => gestisciFrase()}
+                  >
+                    <FavoriteBorderIcon
+                      htmlColor={colors.mainOrange}
+                      className="cuoreFinto"
+                    />
+                  </div>
+                  <div className="frase">{frase}</div>
+                </div>
               )}
             </Card>
           );
@@ -94,6 +126,7 @@ const Contenitore = styled.div`
   padding: 30px;
   padding-top: 80px;
   justify-content: center;
+  margin-bottom: 30px;
   .card {
     width: 100%;
     margin-bottom: 30px;

@@ -10,6 +10,12 @@ import CardHeader from "@material-ui/core/CardHeader";
 import CardMedia from "@material-ui/core/CardMedia";
 import CardContent from "@material-ui/core/CardContent";
 
+import CardActions from "@material-ui/core/CardActions";
+import { UtenteContext } from "../containers/App";
+import FavoriteIcon from '@material-ui/icons/Favorite';
+import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
+
+
 import ArrowBackIosRoundedIcon from '@material-ui/icons/ArrowBackIosRounded';
 
 import {
@@ -29,6 +35,17 @@ import { Share } from "@material-ui/icons";
 
 const Corso = () => {
 
+  const [mostraFrase, setMostraFrase]=useState(false);
+  const [frase, setFrase]=useState("");
+  const gestisciFrase = () =>{
+    if(mostraFrase){
+      setFrase("");
+      setMostraFrase(false);
+    }else{
+      setFrase("per usare i preferiti devi essere loggato!");
+      setMostraFrase(true);
+    }
+  }
   const [apriChiudShareMenu, setApriChiudiShareMenu] = useState(null);
 
   // in questo modo mi parte la pagina dall'alto su y
@@ -37,11 +54,16 @@ const Corso = () => {
   }, []);
 
   const contestoCorso = useContext(corsiContext);
+  const contestoUtente = useContext(UtenteContext);
+
   const { chiave } = useParams();
   const corso = contestoCorso.tabella[chiave];
 
   const history = useHistory();
 
+ const gestisciPreferito = () =>{
+    contestoUtente.togglePreferito(chiave);
+  };
   return (
     <Contenitore>
             <Card className="card">
@@ -65,7 +87,7 @@ const Corso = () => {
           >
             <WhatsappShareButton
               // title={ricetta?.name + ": "}
-              title={`Ciao, dai un occhiata a questa ricetta, *${corso?.nome}* : `}
+              title={`Ciao, dai un occhiata a questo corso, *${corso?.nome}* : `}
               url={window.location.href}
               children={
                 <WhatsappIcon className="share-btn" size={32} round={true} />
@@ -92,6 +114,22 @@ const Corso = () => {
                 <div
                   dangerouslySetInnerHTML={{ __html: corso?.programma }}
                 ></div>
+
+                  {contestoUtente?.utente?.loggato && ( 
+                    <CardActions disableSpacing>
+        <IconButton onClick={()=> gestisciPreferito()}>
+              {contestoUtente.isPreferito(chiave) ? <FavoriteIcon htmlColor={colors.mainOrange} className="cuorePieno"/> : <FavoriteBorderIcon htmlColor={colors.mainOrange} className="cuorePieno" />}
+          </IconButton>
+          </CardActions>
+        )}
+        {!contestoUtente?.utente?.loggato && (
+          <div className="contenitoreBtnFalso">
+            <div className="preferitiFalso" onClick={() => gestisciFrase()}>
+                <FavoriteBorderIcon htmlColor={colors.mainOrange} className="cuoreFinto" />
+          </div>
+          <div className="frase">{frase}</div>
+        </div>
+        )}
               </CardContent>
             <ArrowBackIosRoundedIcon onClick={() => {history.goBack();}} className="tornaIndietro"/>
             </Card>

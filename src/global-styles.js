@@ -141,6 +141,14 @@ footer{
 .cuorePieno{
 fill:${colors.titolo}!important;
 }
+.contenitoreBtnFalso{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-direction:column;
+  margin-top: -12px;
+    padding-bottom: 18px;
+}
 .noPreferiti {
     display: flex;
     align-items: center;
@@ -150,6 +158,30 @@ fill:${colors.titolo}!important;
     font-size: 18px;
     color: ${colors.titolo};
     font-weight: bold;
+}
+.preferitiFalso {
+    border: 2px solid #d4d4d4;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: auto;
+    margin-bottom:10px;
+}
+.cuoreFinto{
+fill:#d4d4d4!important;
+}
+.frase {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    color: #ababab;
+    position: absolute;
+    margin-top: 63px;
+
 }
 `;
 

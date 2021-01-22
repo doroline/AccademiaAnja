@@ -7,5 +7,6 @@ export const ROTTE = {
     CERTIFICAZIONI: '/Certificazioni',
     OFFERTE: '/Offerte',
     DETTAGLIO_CORSO: '/dettaglio-corso',
-    PREFERITI: '/preferiti'
+    PREFERITI: '/preferiti',
+    LOGIN: '/login'
 };

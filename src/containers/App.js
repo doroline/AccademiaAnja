@@ -8,6 +8,7 @@ import Contatti from "./Contatti";
 import Certificazioni from "./Certificazioni";
 import Offerte from "./Offerte";
 import Preferiti from "./Preferiti";
+import Login from "./Login";
 import Footer from "../components/Footer";
 import Logo from "../img/logo.jpg";
 
@@ -222,6 +223,7 @@ function App() {
           <UtenteContext.Provider
         value={{
           utente,
+          allievo,
           togglePreferito,
           isPreferito,
         }}
@@ -237,7 +239,6 @@ function App() {
               logout={logout}
               loggatiConGoogle={loggatiConGoogle}
               utente={utente}
-              allievo={allievo}
             />
             <Link to={ROTTE.HOME} className="linkHome">
               <img src={Logo} className="logo" />
@@ -278,7 +279,6 @@ function App() {
                 >
                   <DettaglioCorso />
                 </Route>
-
                 <Route exact path={ROTTE.OFFERTE}>
                   <Offerte />
                 </Route>
@@ -288,15 +288,18 @@ function App() {
                 <Route exact path={ROTTE.PREFERITI}>
                   <Preferiti />
                 </Route>
+                <Route exact path={ROTTE.LOGIN}>
+                  <Login loggatiConGoogle={loggatiConGoogle} />
+                </Route>
                 <Route path={ROTTE.HOME}>
                   <Home />
                 </Route>
               </Switch>
             </div>
           )}
-          <footer>
+          {/* <footer>
             <Footer />
-          </footer>
+          </footer> */}
         </Contenitore>
       </Router>
       </UtenteContext.Provider>
@@ -320,8 +323,8 @@ const Contenitore = styled.div`
   .contPrimoAccesso {
     position: absolute;
     background: white;
-    height: 100%;
-    padding: 20px;
+    padding: 30px;
+    margin-top: 78px;
   }
 `;
 

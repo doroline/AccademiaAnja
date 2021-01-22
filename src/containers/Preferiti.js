@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { useHistory, useLocation } from "react-router-dom";
+import { useHistory, useLocation, Redirect} from "react-router-dom";
 import { ROTTE } from "../costanti";
 import { corsiContext, UtenteContext } from "../containers/App";
 import styled, { keyframes } from "styled-components";
@@ -17,6 +17,9 @@ import IconButton from "@material-ui/core/IconButton";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 
+
+ 
+ 
 const Preferiti = () => {
   const corsi = useContext(corsiContext);
   const contestoUtente = useContext(UtenteContext);
@@ -35,9 +38,18 @@ const Preferiti = () => {
   });
 
   console.log(corsiPreferiti);
+
+  if (!contestoUtente.utente?.loggato) {
+    return (
+        <Redirect to={ROTTE.LOGIN} />
+    )
+   }
+
   return (
-    <Contenitore>
+ 
     
+    <Contenitore>
+ 
       {
         //nodo.slice(0,1).map((nodo) => {
         corsiPreferiti.map((nodo, key) => {
@@ -94,14 +106,13 @@ const Preferiti = () => {
         })
       }
 
-      {!corsiPreferiti == 0 && 
-                 <div className="noPreferiti">
-                    <div>
-                    Attualmente non ci sono preferiti
-                    </div>
-                 </div>
-
-         }
+      {corsiPreferiti == 0 && 
+        <div className="noPreferiti">
+           <div>
+           Attualmente non ci sono preferiti
+           </div>
+        </div>
+    }
     </Contenitore>
   );
     

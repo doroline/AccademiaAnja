@@ -10,16 +10,27 @@ import CardContent from "@material-ui/core/CardContent";
 import Button from "@material-ui/core/Button";
 import Truncate from "react-truncate";
 
-import { colors } from '../global-styles';
+import { colors } from "../global-styles";
 
 import CardActions from "@material-ui/core/CardActions";
 import { UtenteContext } from "../containers/App";
-import IconButton from '@material-ui/core/IconButton';
-import FavoriteIcon from '@material-ui/icons/Favorite';
-import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
-
+import IconButton from "@material-ui/core/IconButton";
+import FavoriteIcon from "@material-ui/icons/Favorite";
+import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 
 const NuoviCorsi = () => {
+  const [mostraFrase, setMostraFrase] = useState(false);
+  const [frase, setFrase] = useState("");
+  const gestisciFrase = () => {
+    if (mostraFrase) {
+      setFrase("");
+      setMostraFrase(false);
+    } else {
+      setFrase("per usare i preferiti devi essere loggato!");
+      setMostraFrase(true);
+    }
+  };
+
   const corsi = useContext(corsiContext);
 
   // costanti per gli Hook di Routing
@@ -31,17 +42,16 @@ const NuoviCorsi = () => {
     listaRottePrecedenti.push(nuovaRotta);
   };
 
- console.log(corsi.tabella)
+  console.log(corsi.tabella);
   return (
     <Contenitore>
       <h2>Ecco le ultime novità</h2>
       {corsi.nodoPrincipale.map((nodo, key) => {
         if (corsi.tabella[nodo].news === "y") {
-
-          const gestisciPreferito = (evento) =>{
-    evento.stopPropagation();
-    contestoUtente.togglePreferito(nodo);
-  };
+          const gestisciPreferito = (evento) => {
+            evento.stopPropagation();
+            contestoUtente.togglePreferito(nodo);
+          };
           return (
             <Card className="card" id={key}>
               <CardHeader
@@ -60,27 +70,47 @@ const NuoviCorsi = () => {
                     }}
                   ></div>
                 </Truncate>
-              
-              <div>
-                <Button
-                  onClick={() =>
-                    cambiaRotta(ROTTE.DETTAGLIO_CORSO + "/" + nodo)
-                  }
-                >
-                  Visualizza corso
-                </Button>
-              </div>
+
+                <div>
+                  <Button
+                    onClick={() =>
+                      cambiaRotta(ROTTE.DETTAGLIO_CORSO + "/" + nodo)
+                    }
+                  >
+                    Visualizza corso
+                  </Button>
+                </div>
               </CardContent>
               {contestoUtente?.utente?.loggato && (
                 <CardActions disableSpacing>
                   <IconButton onClick={(evento) => gestisciPreferito(evento)}>
                     {contestoUtente.isPreferito(nodo) ? (
-                      <FavoriteIcon htmlColor={colors.mainOrange} className="cuorePieno"/>
+                      <FavoriteIcon
+                        htmlColor={colors.mainOrange}
+                        className="cuorePieno"
+                      />
                     ) : (
-                      <FavoriteBorderIcon htmlColor={colors.mainOrange} className="cuorePieno" />
+                      <FavoriteBorderIcon
+                        htmlColor={colors.mainOrange}
+                        className="cuorePieno"
+                      />
                     )}
                   </IconButton>
                 </CardActions>
+              )}
+              {!contestoUtente?.utente?.loggato && (
+                <div className="contenitoreBtnFalso">
+                  <div
+                    className="preferitiFalso"
+                    onClick={() => gestisciFrase()}
+                  >
+                    <FavoriteBorderIcon
+                      htmlColor={colors.mainOrange}
+                      className="cuoreFinto"
+                    />
+                  </div>
+                  <div className="frase">{frase}</div>
+                </div>
               )}
             </Card>
           );

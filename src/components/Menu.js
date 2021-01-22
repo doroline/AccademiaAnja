@@ -81,15 +81,16 @@ const Menu = (props) => {
           >
             <ListItemText primary="Certificazioni" />
           </ListItem>
-          {contestoUtente?.utente?.loggato && (
-            <>
-              <ListItem
-                button
-                key="Preferiti"
-                onClick={() => cambiaRotta(ROTTE.PREFERITI)}
-              >
-                <ListItemText primary="Preferiti" />
-              </ListItem>
+
+          <>
+            <ListItem
+              button
+              key="Preferiti"
+              onClick={() => cambiaRotta(ROTTE.PREFERITI)}
+            >
+              <ListItemText primary="Preferiti" />
+            </ListItem>
+            {contestoUtente.allievo && contestoUtente.utente.loggato && (
               <ListItem
                 button
                 key="Offerte di lavoro"
@@ -98,10 +99,12 @@ const Menu = (props) => {
               >
                 <ListItemText primary="Offerte di lavoro" />
               </ListItem>
-            </>
-          )}
+            )}
+          </>
 
-          {!props.allievo && (
+
+
+          {!contestoUtente.utente?.loggato && (
             <div className="avvisoAllievo">
               Se sei un nostro ex allievo, accedi con Google, e poi contattaci
               via email per comunicarci della tua iscrizione all'app, dopo una
@@ -109,13 +112,14 @@ const Menu = (props) => {
               <strong>offerte di lavoro dedicate ai nostri ex allievi.</strong>
             </div>
           )}
+  
         </List>
-        {!props.utente.loggato && (
+        {!contestoUtente.utente?.loggato && (
           <Button onClick={() => props.loggatiConGoogle()}>
             Accedi con Google
           </Button>
         )}
-        {props.utente.loggato && (
+        {contestoUtente.utente?.loggato && (
           <div>
             <Button onClick={() => props.logout()}>ESCI</Button>
           </div>
