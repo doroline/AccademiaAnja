@@ -183,6 +183,18 @@ fill:#d4d4d4!important;
     margin-top: 63px;
 
 }
+.slick-track {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.slick-prev, .slick-next {
+  display:none!important;
+}
+.slick-slide img {
+    display: block;
+    width: 100%;
+}
 `;
 
 export default GlobalStyles;
