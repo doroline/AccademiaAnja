@@ -69,6 +69,13 @@ const Menu = (props) => {
           </ListItem>
           <ListItem
             button
+            key="Cerca un corso"
+            onClick={() => cambiaRotta(ROTTE.CERCA_CORSI)}
+          >
+            <ListItemText primary="Cerca un corso" />
+          </ListItem>
+          <ListItem
+            button
             key="Contatti"
             onClick={() => cambiaRotta(ROTTE.CONTATTI)}
           >

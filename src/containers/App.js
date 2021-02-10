@@ -2,6 +2,7 @@ import { useState, useEffect, createContext } from "react";
 import Button from "@material-ui/core/Button";
 import Home from "./Home";
 import Corsi from "./Corsi";
+import CercaCorsi from "./CercaCorsi";
 import DettaglioCorso from "./DettaglioCorso";
 import Master from "./Master";
 import Contatti from "./Contatti";
@@ -271,6 +272,9 @@ function App() {
                 </Route>
                 <Route exact path={ROTTE.CORSI}>
                   <Corsi />
+                </Route>
+                <Route exact path={ROTTE.CERCA_CORSI}>
+                  <CercaCorsi />
                 </Route>
                 <Route
                   exact
